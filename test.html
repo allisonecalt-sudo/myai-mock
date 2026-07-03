@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>הדמיה — המבחן של מחר</title>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FBF7F2; --ink: #1A1A1A;
+    --accent: #C4633F; --accent-soft: #F6E3DA;
+    --soft: #EFE9E0; --dim: #8A847D;
+    --good: #6D8B62; --good-soft: #E4EBE1;
+    --line: #F0EAE2;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Assistant', 'Segoe UI', sans-serif;
+    background: var(--bg); color: var(--ink);
+    min-height: 100vh;
+    padding: 12px 13px 84px;
+    max-width: 460px; margin: 0 auto;
+  }
+  header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .h-side { display: flex; align-items: center; gap: 10px; }
+  .back { font-size: 15px; font-weight: 800; text-decoration: none; color: var(--ink); }
+  h1 { font-size: 17px; font-weight: 800; }
+  .badge {
+    font-size: 11px; font-weight: 700; color: var(--accent);
+    border: 1px solid var(--accent); border-radius: 999px;
+    padding: 2px 10px; background: #fff;
+  }
+  .card {
+    background: #fff; border-radius: 18px;
+    padding: 13px 14px 12px;
+    box-shadow: 0 2px 12px rgba(140,90,60,.07);
+    margin-bottom: 10px;
+  }
+  .ctx { display: flex; align-items: center; gap: 10px; }
+  .doc {
+    width: 42px; height: 42px; border-radius: 12px;
+    background: var(--soft); display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .ctx .t { font-size: 14.5px; font-weight: 800; }
+  .ctx .s { font-size: 12px; color: var(--dim); font-weight: 600; margin-top: 1px; }
+  .scan {
+    font-size: 11.5px; font-weight: 700; color: var(--good);
+    background: var(--good-soft); border-radius: 999px;
+    padding: 3px 10px; margin-right: auto; flex-shrink: 0;
+  }
+  /* test sheet */
+  .sheet {
+    border: 1.5px solid var(--line); border-radius: 12px;
+    padding: 11px 12px 9px; background: #FFFEFB;
+  }
+  .sheet .head {
+    font-size: 11px; font-weight: 800; color: var(--dim);
+    text-align: center; letter-spacing: .4px;
+    padding-bottom: 7px; border-bottom: 1px solid var(--line); margin-bottom: 7px;
+  }
+  .q { display: flex; align-items: center; gap: 8px; padding: 5px 5px; border-radius: 8px; }
+  .q .n { font-size: 11.5px; font-weight: 800; color: var(--dim); width: 26px; flex-shrink: 0; }
+  .q .lines { flex: 1; }
+  .q .l { height: 4.5px; border-radius: 3px; background: var(--soft); margin: 3px 0; }
+  .q .l.short { width: 58%; }
+  .q.flag { background: var(--accent-soft); }
+  .q.flag .n { color: var(--accent); }
+  .q.flag .l { background: #EFCDBD; }
+  .q .f { font-size: 12px; flex-shrink: 0; }
+  /* suggestions */
+  .label { font-size: 11px; color: var(--dim); font-weight: 700; margin-bottom: 6px; letter-spacing: .2px; }
+  .note { border-right: 4px solid var(--accent); }
+  .from {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 11.5px; color: var(--dim); font-weight: 600; margin-bottom: 6px;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  .why {
+    display: inline-block; font-size: 11px; font-weight: 700; color: #8C4326;
+    background: var(--accent-soft); border-radius: 999px; padding: 2px 9px; margin-bottom: 6px;
+  }
+  .msg { font-size: 14px; line-height: 1.4; font-weight: 700; }
+  .actions { display: flex; gap: 8px; margin-top: 10px; }
+  .btn {
+    flex: 1; text-align: center;
+    border-radius: 12px; padding: 7px 0;
+    font-size: 13px; font-weight: 700;
+    font-family: 'Assistant', sans-serif;
+    border: 1.5px solid var(--ink);
+    background: transparent; color: var(--ink);
+  }
+  .btn.primary { background: var(--ink); color: #fff; }
+  .guard-band {
+    text-align: center; font-size: 12.5px; font-weight: 800; color: var(--accent);
+    background: var(--accent-soft); border-radius: 12px;
+    padding: 8px 10px; margin-bottom: 10px;
+  }
+  .guard-band small { display: block; font-size: 11px; font-weight: 600; color: #8C4326; margin-top: 1px; }
+  /* convert */
+  .conv { display: flex; align-items: center; gap: 10px; }
+  .conv .e {
+    width: 40px; height: 40px; border-radius: 12px;
+    background: var(--soft); display: flex; align-items: center; justify-content: center;
+    font-size: 19px; flex-shrink: 0;
+  }
+  .conv .t { font-size: 13.5px; font-weight: 700; line-height: 1.35; flex: 1; }
+  .conv .t small { display: block; font-size: 11px; color: var(--dim); font-weight: 600; }
+  footer { text-align: center; font-size: 11px; color: var(--dim); margin-top: 2px; font-weight: 600; }
+  nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    max-width: 460px; margin: 0 auto;
+    background: #fff; border-top: 1px solid var(--line);
+    display: flex;
+    padding: 6px 4px calc(8px + env(safe-area-inset-bottom));
+    box-shadow: 0 -3px 14px rgba(140,90,60,.08);
+  }
+  nav a { flex: 1; text-align: center; text-decoration: none; color: var(--dim); }
+  nav .i { font-size: 18px; display: block; }
+  nav .l { font-size: 10px; font-weight: 700; }
+  nav a.on { color: var(--accent); }
+</style>
+</head>
+<body>
+  <header>
+    <div class="h-side">
+      <a class="back" href="index.html">‹</a>
+      <h1>המבחן של מחר</h1>
+    </div>
+    <div class="badge">הדמיה · חזון</div>
+  </header>
+
+  <div class="card">
+    <div class="ctx">
+      <div class="doc">📄</div>
+      <div>
+        <div class="t">מבחן במדעים · כיתה ב׳</div>
+        <div class="s">הועלה ע״י המורה שירה · אתמול</div>
+      </div>
+      <div class="scan">נסרק ✓</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="label">המבחן מול התמונה של יונתן</div>
+    <div class="sheet">
+      <div class="head">מבחן מדעים · עמוד 1 מתוך 2</div>
+      <div class="q"><div class="n">ש׳ 1</div><div class="lines"><div class="l"></div><div class="l short"></div></div></div>
+      <div class="q"><div class="n">ש׳ 2</div><div class="lines"><div class="l"></div><div class="l short"></div></div></div>
+      <div class="q flag"><div class="n">ש׳ 3</div><div class="lines"><div class="l"></div><div class="l"></div><div class="l short"></div></div><div class="f">🚩</div></div>
+      <div class="q"><div class="n">ש׳ 4</div><div class="lines"><div class="l short"></div></div></div>
+      <div class="q flag"><div class="n">ש׳ 5</div><div class="lines"><div class="l"></div><div class="l short"></div></div><div class="f">🚩</div></div>
+      <div class="q"><div class="n">ש׳ 6</div><div class="lines"><div class="l"></div><div class="l short"></div></div></div>
+    </div>
+  </div>
+
+  <div class="guard-band">
+    דגל = שאלה, לא פסק דין
+    <small>המורה מכירה את הכיתה — היא מחליטה</small>
+  </div>
+
+  <div class="card note">
+    <div class="from"><div class="dot"></div> שאלה 3</div>
+    <div class="why">קטע קריאה צפוף — קשה לו עם עמוד עמוס</div>
+    <p class="msg">אולי לשאול את יונתן בעל פה?</p>
+    <div class="actions">
+      <button class="btn primary">מקבלת ✓</button>
+      <button class="btn">לא מתאים</button>
+    </div>
+  </div>
+
+  <div class="card note">
+    <div class="from"><div class="dot"></div> שאלה 5</div>
+    <div class="why">הוראה בת שלושה שלבים — קשה לו להתחיל</div>
+    <p class="msg">לפצל לשתי שאלות קצרות?</p>
+    <div class="actions">
+      <button class="btn primary">מקבלת ✓</button>
+      <button class="btn">לא מתאים</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="conv">
+      <div class="e">🎧</div>
+      <div class="t">להפוך את קטע הקריאה לשמע, ליום הלימוד בבית?<small>יונתן לומד דרך האוזניים</small></div>
+    </div>
+    <div class="actions">
+      <button class="btn primary">כן, תכינו</button>
+      <button class="btn">לא הפעם</button>
+    </div>
+  </div>
+
+  <footer>ההחלטה תמיד אצל הצוות · שום דבר לא זז בלי אישור</footer>
+
+  <nav>
+    <a href="index.html"><span class="i">🏠</span><span class="l">היום</span></a>
+    <a class="on" href="test.html"><span class="i">📝</span><span class="l">מבחנים</span></a>
+    <a href="#"><span class="i">🧰</span><span class="l">כלים</span></a>
+    <a href="#"><span class="i">👥</span><span class="l">צוות</span></a>
+    <a href="#"><span class="i">📊</span><span class="l">התמונה</span></a>
+  </nav>
+</body>
+</html>
