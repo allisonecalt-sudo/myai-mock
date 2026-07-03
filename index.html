@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>myAI — יונתן</title>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FBF7F2;
+    --ink: #1A1A1A;
+    --accent: #C4633F;
+    --soft: #EFE9E0;
+    --dim: #8A847D;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Assistant', 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 20px 16px 40px;
+    max-width: 460px;
+    margin: 0 auto;
+  }
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 22px;
+  }
+  .logo { font-size: 22px; font-weight: 700; }
+  .logo span { color: var(--accent); }
+  .badge {
+    font-size: 11px; color: var(--dim);
+    border: 1px solid var(--dim); border-radius: 999px;
+    padding: 2px 10px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 18px 18px 16px;
+    box-shadow: 0 2px 10px rgba(26,26,26,.06);
+    margin-bottom: 16px;
+  }
+  .kid {
+    display: flex; align-items: center; gap: 14px; margin-bottom: 14px;
+  }
+  .avatar {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+  }
+  .kid h1 { font-size: 20px; font-weight: 700; }
+  .kid p { font-size: 13px; color: var(--dim); }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 2px; }
+  .chip {
+    background: var(--soft);
+    border-radius: 999px;
+    font-size: 13px; font-weight: 600;
+    padding: 5px 12px;
+  }
+  .chip.hard { background: #F6E3DA; color: #8C4326; }
+  .label { font-size: 12px; color: var(--dim); font-weight: 600; margin-top: 12px; }
+  .updated { font-size: 12px; color: var(--dim); margin-top: 12px; }
+  .updated b { color: var(--ink); }
+  .note {
+    border-right: 4px solid var(--accent);
+    background: #fff;
+  }
+  .note .from {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--dim); margin-bottom: 8px;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .note p.msg { font-size: 16px; line-height: 1.5; font-weight: 600; }
+  .actions { display: flex; gap: 10px; margin-top: 14px; }
+  .btn {
+    flex: 1; text-align: center;
+    border-radius: 12px; padding: 9px 0;
+    font-size: 14px; font-weight: 700;
+    border: 1.5px solid var(--ink);
+    background: transparent; color: var(--ink);
+  }
+  .btn.primary { background: var(--ink); color: #fff; }
+  footer { text-align: center; font-size: 11px; color: var(--dim); margin-top: 8px; }
+</style>
+</head>
+<body>
+  <header>
+    <div class="logo">my<span>AI</span></div>
+    <div class="badge">הדמיה · חזון</div>
+  </header>
+
+  <div class="card">
+    <div class="kid">
+      <div class="avatar">🧒</div>
+      <div>
+        <h1>יונתן, 8</h1>
+        <p>כיתה ב׳ · התמונה מתעדכנת כל הזמן</p>
+      </div>
+    </div>
+    <div class="label">חוזקות</div>
+    <div class="row">
+      <div class="chip">לומד דרך האוזניים 🎧</div>
+      <div class="chip">חוש הומור</div>
+      <div class="chip">סקרן</div>
+    </div>
+    <div class="label">קשה לו עם</div>
+    <div class="row">
+      <div class="chip hard">עמוד כתוב צפוף</div>
+      <div class="chip hard">להתחיל משימה</div>
+    </div>
+    <div class="updated">עדכון אחרון: אתמול, 14:32 · <b>מהמורה שירה</b></div>
+  </div>
+
+  <div class="card note">
+    <div class="from"><div class="dot"></div> הצעה מה-AI · לקראת המבחן מחר</div>
+    <p class="msg">שאלות 3 ו-5 בנויות על קטע קריאה צפוף — כדאי לשקול לשאול את יונתן בעל פה.</p>
+    <div class="actions">
+      <button class="btn primary">מקבלת ✓</button>
+      <button class="btn">לא מתאים</button>
+    </div>
+  </div>
+
+  <footer>ההחלטה תמיד אצל הצוות · אף נתון לא זז בלי אישור</footer>
+</body>
+</html>
